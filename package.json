@@ -4,6 +4,7 @@
   "description": "People learning platform",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon index.js"
   },
   "repository": {
