@@ -3,13 +3,19 @@ const db = require('./src/db/db.config');
 const typeDefs = require('./src/schema/typeDefs');
 const resolvers = require('./src/schema/resolvers');
 const models = require('./models');
+const auth = require('./src/middleware/auth');
 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: { models },
+    context: ({ req }) => {
+        const authHeaders = req.headers.authorization;
+        const token = authHeaders && authHeaders.split(' ')[1];
+        const access = auth(token);
+        return { access, models };
+    },
     cors: true,
-}) 
+}); 
 
 server
     .listen()

@@ -23,6 +23,21 @@ type User {
         color: String!
     }
 
+    input UserCreateInput {
+        login: String!
+        password: String!
+    }
+
+    input UserLoginInput {
+        login: String!
+        password: String!
+    }
+    
+    type AuthPayLoad {
+        token: String!
+        user: User!
+    }
+
     type Query {
         users: [User!]!
         students: [Student!]!
@@ -30,6 +45,9 @@ type User {
     }
 
     type Mutation {
+        registrUser(data: UserCreateInput!) : AuthPayLoad
+        loginUser(data: UserLoginInput!): AuthPayLoad
+
         createStudent(fullName: String!, instagram: String!, telegram: String!, email: String!, data: String!): String
         editStudent(id: Int!, fullName: String!, instagram: String!, telegram: String!, email: String!, data: String!): String
         deleteStudent(id: Int!): String
@@ -38,7 +56,6 @@ type User {
         editModule(id: Int!, title: String!, color: String!): String
         deleteModule(id: Int!): String
     }
-    
 `;
 
 module.exports = typeDefs;
