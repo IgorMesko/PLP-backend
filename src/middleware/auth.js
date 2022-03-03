@@ -1,15 +1,17 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const auth = (token) => {
+module.exports = (req, res, next) => {
     try {
-        if(token) {
-            return jwt.verify(token, process.env.SECRET_KEY);
-        };
-        return "Login in to access resource";
+        const token = req.headers.authorization.split(' ')[1];
+        if(!token) {
+            throw new Error("Authentication failed!")
+        }
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
+        req.user = verified;
+        next();
     } catch (error) {
         console.log(error);
     }
 };
 
-module.exports = auth;

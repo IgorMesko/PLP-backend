@@ -20,7 +20,7 @@ const resolvers = {
             return student;
         },
         async modules (root, args, { auth, models }) {
-                        if(!auth) {
+            if(!auth) {
                 throw new Error('Not Authenticated')
             }
             return models.Module.findAll();
@@ -55,7 +55,7 @@ const resolvers = {
                 throw new Error('Unable to Login. Incorrect password.');
             };
 
-            return {token: jwt.sign(user.toJSON(), process.env.SECRET_KEY), user};
+            return {token: jwt.sign({ data: login }, process.env.SECRET_KEY), user};
         },
 
         createModule: async (root, { studentId, title, color, }, { models }) => 
