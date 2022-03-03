@@ -1,13 +1,13 @@
 const { ApolloServer } = require('apollo-server');
-const typeDefs = require('./data/schema/typeDefs');
-const resolvers = require('./data/schema/resolvers');
+const typeDefs = require('./src/schema/typeDefs');
+const resolvers = require('./src/schema/resolvers');
 const models = require('./models');
-const auth = require('./data/middleware/auth');
+const auth = require('./src/middleware/auth');
 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ auth }) => {
+    context: ({ req }) => {
         return { auth, models };
     },
     cors: true,
