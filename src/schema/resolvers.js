@@ -55,7 +55,7 @@ const resolvers = {
                 throw new Error('Unable to Login. Incorrect password.');
             };
 
-            return {token: jwt.sign({ data: login }, process.env.SECRET_KEY), user};
+            return {token: jwt.sign({ data: login }, process.env.ACCESS_TOKEN_SECRET), user};
         },
 
         createModule: async (root, { studentId, title, color, }, { models }) => 

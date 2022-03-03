@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
         if(!token) {
             throw new Error("Authentication failed!")
         }
-        const verified = jwt.verify(token, process.env.SECRET_KEY);
+        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         req.user = verified;
         next();
     } catch (error) {
