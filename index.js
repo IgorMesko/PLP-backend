@@ -8,7 +8,10 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: ({ req }) => {
-        return { auth, models };
+        const tokenBearer = req.headers.authorization || '';
+        const token = tokenBearer.split(' ')[1];
+        const user = auth(token);
+        return { user, models };
     },
     cors: true,
 }); 

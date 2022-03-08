@@ -4,10 +4,10 @@ require('dotenv').config();
 
 const resolvers = {
     Query: {
-        async users (root, args, { auth, models }) {
+        users: async (root, args, { auth, models }) => {
             if(!auth) {
                 throw new Error('Not Authenticated')
-            }
+            }  
             return models.User.findAll();
         },
         async students (root, args, { auth, models }) {
@@ -55,7 +55,7 @@ const resolvers = {
                 throw new Error('Unable to Login. Incorrect password.');
             };
 
-            return {token: jwt.sign({ data: login }, process.env.ACCESS_TOKEN_SECRET), user};
+            return {token: jwt.sign({ id: user.id, login }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15min" })};
         },
 
         createModule: async (root, { studentId, title, color, }, { models }) => 
