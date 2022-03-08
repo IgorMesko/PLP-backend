@@ -5,37 +5,28 @@ require('dotenv').config();
 const resolvers = {
     Query: {
         users: async (root, args, { auth, models }) => {
-            if(!auth) {
-                throw new Error('Not Authenticated')
-            }  
             return models.User.findAll();
         },
         async students (root, args, { auth, models }) {
-            if(!auth) {
-                throw new Error('Not Authenticated')
-            }
             const student = models.Student.findAll({
                 order: [['createdAt', 'DESC']],
             });
             return student;
         },
         async modules (root, args, { auth, models }) {
-            if(!auth) {
-                throw new Error('Not Authenticated')
-            }
             return models.Module.findAll();
         },
     },
 
     Mutation: {
-        registrUser: async (root, args, { models }, info) => {
+/*         registrUser: async (root, args, { models }, info) => {
             const { data: { login, password } } = args;
             await models.User.create({
                 login,
                 password: bcrypt.hashSync(password, 10)
             });
             return "User created successfully";
-        },
+        }, */
 
         loginUser: async (root, args, { models }, info) => {
             const { data: { login, password } } = args;
